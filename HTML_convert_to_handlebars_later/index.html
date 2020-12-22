@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker | Weekly Spending</title>
+
+    <!--Bootstrap CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!--CSS-->
+    <link rel="stylesheet" href="../public/assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light upper">
+        <a class="navbar-brand" href="index.html">Finance Tracker</a>
+
+        <!-- "Hamburger" menu for mobile site-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links to other pages -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="index.html">Weekly Spending<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="chart.html">Monthly Summary</a>
+            <a class="nav-item nav-link" href="accounts.html">Account Balances</a>
+          </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h4>Spending, Week of __</h4>
+        </header>
+
+        <!--Categories & Amounts table-->
+        <div class="row table-row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Amounts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Rent/Mortgage</th>
+                        <td id="week-rent"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Utilities</th>
+                        <td id="week-utilities"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Food</th>
+                        <td id="week-food"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Transportation</th>
+                        <td id="week-"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Entertainment</th>
+                        <td id="week-entertainment"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Savings</th>
+                        <td id="week-savings"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Miscellaneous</th>
+                        <td id="week-misc"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">TOTAL</th>
+                        <td id="week-total"></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--'Amount' input box with 'Category' dropdown-->
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                    <!-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button> -->
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Rent/Mortgage</a></li>
+                        <li><a class="dropdown-item" href="#">Utilities</a></li>
+                        <li><a class="dropdown-item" href="#">Food</a></li>
+                        <li><a class="dropdown-item" href="#">Transportation</a></li>
+                        <li><a class="dropdown-item" href="#">Entertainment</a></li>
+                        <li><a class="dropdown-item" href="#">Savings</a></li>
+                        <li><a class="dropdown-item" href="#">Miscellaneous</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--JavaScript CDNs for Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
