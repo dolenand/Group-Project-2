@@ -1,0 +1,171 @@
+    <nav class="navbar navbar-expand-lg navbar-light upper">
+        <a class="navbar-brand" href="index.html">Finance Tracker</a>
+
+        <!-- "Hamburger" menu for mobile site-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links to other pages -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="index.html">Weekly Spending<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="chart.html">Monthly Summary</a>
+            <a class="nav-item nav-link" href="accounts.html">Account Balances</a>
+          </div>
+        </div>
+    </nav>
+
+    <main class="container">
+      <header>
+          <div class="col-12 mb-4">
+             <div class="row justify-content-start">
+                <h4 style="display: inline;">Spending, Week of span</h4>
+                <div class="ml-2" style="display: inline;">
+                  <select  id="weekSelect" class="form-control" title="Category">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                </div>
+             </div>
+          </div>
+      </header>
+
+        <!--Categories & Amounts table-->
+        <div class="row table-row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Amounts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Rent/Mortgage</th>
+                        <td id="week-rent"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Utilities</th>
+                        <td id="week-utilities"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Food</th>
+                        <td id="week-food"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Transportation</th>
+                        <td id="week-transportation"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Entertainment</th>
+                        <td id="week-entertainment"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Savings</th>
+                        <td id="week-savings"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Miscellaneous</th>
+                        <td id="week-misc"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">TOTAL</th>
+                        <td id="week-total"></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--'Amount' input box with 'Category' dropdown-->
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                  <span class="input-group-text">$</span>
+                  <input type="number" id="amountBox" class="form-control" placeholder="Enter amount here">
+                  <button class="btn btn-outline-secondary" type="button">
+                      Category
+                  </button>
+            
+                  <select name="" id="categorySelect" class="form-control" title="Category">
+                      <option value="week-rent">Rent</option>
+                      <option value="week-utilities">Utilities</option>
+                      <option value="week-food">Food</option>
+                      <option value="week-transportation">Transportation</option>
+                      <option value="week-entertainment">Entertainment</option>
+                      <option value="week-savings">Savings</option>
+                      <option value="week-misc">Miscellaneous</option>
+                  </select>
+              </div>
+              <div class="col-12 mt-2 d-flex justify-content-center">
+                  <div class="col-6">
+                    <button id="addBtn" class="btn btn-light btn-lg">Enter</button>
+                  </div>
+                  <div class="col-6">
+                      <button id="clearBtn" class="btn btn-light btn-lg">Clear</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+
+    <!--JavaScript CDNs for Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <!--Weekly Spending JS-->
+    <script>
+      let week = 1
+      let weekTotal = 0;
+      let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
+      let amountBox = document.getElementById("amountBox")
+      let category = "week-rent"
+      
+      function doUpdateMonth(){
+        let mValues = weeks[week - 1]
+        weekTotal = 0
+
+        document.getElementById("week-rent").innerHTML = mValues["week-rent"] ?? 0
+        weekTotal +=  parseFloat(mValues["week-rent"]?? 0) 
+        document.getElementById("week-utilities").innerHTML = mValues["week-utilities"] ?? 0
+        weekTotal +=  parseFloat(mValues["week-utilities"]?? 0) 
+        document.getElementById("week-food").innerHTML = mValues["week-food"] ?? 0
+        weekTotal += parseFloat(mValues["week-food"] ?? 0)  
+        
+        document.getElementById("week-transportation").innerHTML = mValues["week-transportation"] ?? 0
+        weekTotal += parseFloat(mValues["week-transportation"] ?? 0)  
+        document.getElementById("week-entertainment").innerHTML = mValues["week-entertainment"] ?? 0
+        weekTotal += parseFloat(mValues["week-entertainment"] ?? 0)
+        document.getElementById("week-savings").innerHTML = mValues["week-savings"] ?? 0
+        weekTotal += parseFloat(mValues["week-savings"] ?? 0)
+        document.getElementById("week-misc").innerHTML = mValues["week-misc"] ?? 0
+        weekTotal += parseFloat(mValues["week-misc"] ?? 0)
+        document.getElementById("week-total").innerHTML = weekTotal
+      }
+
+
+      document.getElementById("categorySelect").onclick = (e) =>{
+        category = e.target.value
+      }
+
+      document.getElementById("weekSelect").onclick = (e) =>{
+        week = parseInt(e.target.value)
+        doUpdateMonth()
+      }
+      
+      document.getElementById("addBtn").onclick = (e) =>{
+        weeks[week - 1][category] = parseFloat(weeks[week - 1][category] ?? 0 ) + parseFloat(amountBox.value)
+        localStorage.setItem("weeks",JSON.stringify(weeks))
+        doUpdateMonth()
+      }
+      
+      document.getElementById("clearBtn").onclick = (e) =>{
+        weeks[week - 1][category] = 0
+        localStorage.setItem("weeks",JSON.stringify(weeks))
+        doUpdateMonth()
+      }
+      doUpdateMonth()
+  </script>

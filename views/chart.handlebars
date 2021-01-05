@@ -1,0 +1,98 @@
+    <nav class="navbar navbar-expand-lg navbar-light upper">
+        <a class="navbar-brand" href="index.html">Finance Tracker</a>
+
+        <!-- "Hamburger" menu for mobile site-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links to other pages -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="index.html">Weekly Spending</a>
+            <a class="nav-item nav-link active" href="chart.html">Monthly Summary<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="accounts.html">Account Balances</a>
+          </div>
+        </div>
+    </nav>
+    <canvas id="myChart" ></canvas>
+    <main>
+
+    </main>
+
+    <!--JavaScript CDNs for Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    
+    <!--Chart.js-->
+    <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
+     
+      let rent = 0 //week-rent
+      let utilities = 0 //week-utilities
+      let food = 0//week-food
+      let transportation = 0 //week-transportation
+      let entertainment = 0 //week-entertainment
+      let savings = 0//week-savings
+      let misc = 0//week-misc
+      let total = 0 //week-total
+      
+      for(var i = 0;i < 4;i++){
+        week = weeks[i];
+        rent += parseFloat(week['week-rent'] ?? 0)
+        utilities += parseFloat(week['week-utilities'] ?? 0)
+        food += parseFloat(week['week-food'] ?? 0)
+        transportation += parseFloat(week['week-transportation'] ?? 0)
+        entertainment += parseFloat(week['entertainment'] ?? 0)
+        savings += parseFloat(week['week-savings'] ?? 0)
+        misc += parseFloat(week['week-misc'] ?? 0)
+
+        total += (rent + utilities + food + transportation + entertainment + savings + misc)
+      }
+
+
+
+       var myChart = new Chart(ctx, {
+           type: 'bar',
+           data: {
+               labels: ['Rent', 'Utilities', 'Food', 'Transportation', 'Entertainment', 'Savings','Misc','Total'],
+               datasets: [{
+                   label: 'Monthly Expenses',
+                   data: [rent,utilities,food,transportation,entertainment,savings,misc,total],
+                   backgroundColor: [
+                       'rgba(255, 99, 132, 0.2)',
+                       'rgba(54, 162, 235, 0.2)',
+                       'rgba(255, 206, 86, 0.2)',
+                       'rgba(75, 192, 192, 0.2)',
+                       'rgba(153, 102, 255, 0.2)',
+                       'rgba(255, 159, 64, 0.2)',
+                       'rgba(255, 99, 132, 0.2)',
+                       'rgba(54, 162, 235, 0.2)',
+                   ],
+                   borderColor: [
+                       'rgba(255, 99, 132, 1)',
+                       'rgba(54, 162, 235, 1)',
+                       'rgba(255, 206, 86, 1)',
+                       'rgba(75, 192, 192, 1)',
+                       'rgba(153, 102, 255, 1)',
+                       'rgba(255, 159, 64, 1)',
+                       'rgba(255, 99, 132, 1)',
+                       'rgba(54, 162, 235, 1)',
+                   ],
+                   borderWidth: 1
+               }]
+           },
+           options: {
+               scales: {
+                   yAxes: [{
+                       ticks: {
+                           beginAtZero: true
+                       }
+                   }]
+               }
+           }
+       });
+    </script>
