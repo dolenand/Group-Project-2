@@ -9,7 +9,7 @@
         <!-- Links to other pages -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="./">Weekly Spending<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="./">Monthly Spending<span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="./chart">Monthly Summary</a>
             <a class="nav-item nav-link" href="./accounts">Account Balances</a>
           </div>
@@ -20,15 +20,15 @@
       <header>
           <div class="col-12 mb-4">
              <div class="row justify-content-start">
-                <h4 style="display: inline;">Spending: Week</h4>
-                <div class="ml-2" style="display: inline;">
+                <h4 style="display: inline;">Monthly Spending</h4>
+                {{!-- <div class="ml-2" style="display: inline;">
                   <select  id="weekSelect" class="form-control" title="Category">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                </div>
+                </div> --}}
              </div>
           </div>
       </header>
@@ -109,28 +109,56 @@
               </div>
           </div>
       </div>
+
+      <div class="row chartRow">
+        <div class="col-lg-12 chart">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
   </main>
 
     <!--JavaScript CDNs for Bootstrap-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <!--Uncompressed jQuery CDN-->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-    <!--Weekly Spending JS-->
+    <!--Monthly Spending JS-->
     <script>
-      //let week = 1
+    $(document).ready(function() {
+
+      $.get("/api/expenses").then(function(data) {
+        console.log(data);
+        $("#week-rent").text(ex_amount);
+      });
+      //$.get("/api/expenses/2").then(function(data) {
+      //  $("#week-utilities").text(data.ex_amount);
+      //});
+      //$.get("/api/expenses/1").then(function(data) {
+      //  $("#week-food").text(data.ex_amount);
+      //});
+      //$.get("/api/expenses/1").then(function(data) {
+      //  $("#week-transportation").text(data.ex_amount);
+      //});
+      //$.get("/api/expenses/1").then(function(data) {
+      //  $("#week-entertainment").text(data.ex_amount);
+      //});
+      //$.get("/api/expenses/1").then(function(data) {
+      //  $("#week-savings").text(data.ex_amount);
+      //});
+      //$.get("/api/expenses/1").then(function(data) {
+      //  $("#week-misc").text(data.ex_amount);
+      //});
+
+
       let weekTotal = 0;
-      //let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
       let expense = {}
       let amountBox = document.getElementById("amountBox")
-      let category = "week-rent"
-
+      let category = "week-rent"  
 
       function updateExp(categoryName, id){
-        //let mValues = weeks[week - 1]
         document.getElementById(categoryName).innerHTML = expense[categoryName] ?? 0
         weekTotal += parseFloat(expense[categoryName] ?? 0)
         document.getElementById("week-total").innerHTML = weekTotal
@@ -149,15 +177,9 @@
       document.getElementById("categorySelect").onclick = (e) =>{
         category = e.target.value
       }
-
-     // document.getElementById("weekSelect").onclick = (e) =>{
-       // week = parseInt(e.target.value)
-        //doUpdateMonth()
-     // }
       
       document.getElementById("addBtn").onclick = (e) =>{
         expense[category] = parseFloat(expense[category] ?? 0 ) + parseFloat(amountBox.value)
-        //localStorage.setItem("weeks",JSON.stringify(weeks))
 
         if (category === "week-rent"){
           updateExp(category, 1);
@@ -175,11 +197,6 @@
           updateExp("week-misc", 7);
         }
       }
-      
-      //document.getElementById("clearBtn").onclick = (e) =>{
-        //weeks[week - 1][category] = 0
-        //localStorage.setItem("weeks",JSON.stringify(weeks))
-        //doUpdateMonth()
-      //}
-      //doUpdateMonth()
+    });
+
   </script>

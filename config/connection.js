@@ -9,7 +9,7 @@ if (process.env.JAWSDB_URL) {
     connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'rootroot',
+        password: 'St81mIn2020*',
         database: 'networth_db'
     });
 };

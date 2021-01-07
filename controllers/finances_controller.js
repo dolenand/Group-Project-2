@@ -1,3 +1,4 @@
+const { json } = require("express");
 var express = require("express");
 
 var router = express.Router();
@@ -44,6 +45,16 @@ router.post("/api/expenses", function(req, res) {
   ], function(result) {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
+  });
+});
+
+router.get("/api/expenses", function(req, res) {
+  finances.allExpenses(function(data) {
+    res.json({
+      expense_type: req.expense_type,
+      ex_amount: req.ex_amount
+    })
+
   });
 });
 

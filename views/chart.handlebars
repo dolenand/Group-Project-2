@@ -36,14 +36,14 @@
       var ctx = document.getElementById('myChart').getContext('2d');
       let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
      
-      let rent = 0 //week-rent
-      let utilities = 0 //week-utilities
-      let food = 0//week-food
-      let transportation = 0 //week-transportation
-      let entertainment = 0 //week-entertainment
-      let savings = 0//week-savings
-      let misc = 0//week-misc
-      let total = 0 //week-total
+      let rent = 1100 //week-rent
+      let utilities = 100 //week-utilities
+      let food = 400 //week-food
+      let transportation = 150 //week-transportation
+      let entertainment = 200 //week-entertainment
+      let savings = 300 //week-savings
+      let misc = 400 //week-misc
+      let total = 2650 //week-total
       
       for(var i = 0;i < 4;i++){
         week = weeks[i];
@@ -55,7 +55,7 @@
         savings += parseFloat(week['week-savings'] ?? 0)
         misc += parseFloat(week['week-misc'] ?? 0)
 
-        total += (rent + utilities + food + transportation + entertainment + savings + misc)
+        //total += (rent + utilities + food + transportation + entertainment + savings + misc)
       }
 
        var myChart = new Chart(ctx, {
