@@ -3,25 +3,7 @@ DROP DATABASE IF EXISTS netWorth_db;
 CREATE DATABASE netWorth_db;
 USE netWorth_db;
 
-CREATE TABLE checking
-(
-	id int NOT NULL AUTO_INCREMENT,
-    date_com DATETIME DEFAULT now(),
-    action_type varchar(255) NOT NULL,
-    amount DECIMAL (13,2) NOT NULL,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE savings
-(
-	id int NOT NULL AUTO_INCREMENT,
-    date_com DATETIME DEFAULT now(),
-    action_type varchar(255) NOT NULL,
-    amount DECIMAL (13,2) NOT NULL,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE retirement
+CREATE TABLE accounts
 (
 	id int NOT NULL AUTO_INCREMENT,
     date_com DATETIME DEFAULT now(),
