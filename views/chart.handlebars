@@ -1,5 +1,5 @@
     <nav class="navbar navbar-expand-lg navbar-light upper">
-        <a class="navbar-brand" href="./index.handlebars">Finance Tracker</a>
+        <a class="navbar-brand" href="./">Finance Tracker</a>
 
         <!-- "Hamburger" menu for mobile site-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,13 +9,18 @@
         <!-- Links to other pages -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="./index.handlebars">Weekly Spending</a>
-            <a class="nav-item nav-link active" href="./chart.handlebars">Monthly Summary<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="./accounts.handlebars">Account Balances</a>
+            <a class="nav-item nav-link" href="./">Weekly Spending</a>
+            <a class="nav-item nav-link active" href="./chart">Monthly Summary<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="./accounts">Account Balances</a>
           </div>
         </div>
     </nav>
-    <canvas id="myChart" ></canvas>
+    <div class="row">
+        <div class="col-lg-12 chart">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
     <main>
 
     </main>
@@ -52,8 +57,6 @@
 
         total += (rent + utilities + food + transportation + entertainment + savings + misc)
       }
-
-
 
        var myChart = new Chart(ctx, {
            type: 'bar',
@@ -92,7 +95,8 @@
                            beginAtZero: true
                        }
                    }]
-               }
+               },
+               maintainAspectRatio: true
            }
        });
     </script>

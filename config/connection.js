@@ -10,14 +10,14 @@ if (process.env.JAWSDB_URL) {
         host: 'localhost',
         user: 'root',
         password: 'rootroot',
-        database: 'project2_db'
+        database: 'networth_db'
     });
 };
 
 // Creating connection
 connection.connect(function(err){
     if (err) {
-        console.err("error connecting: "+ err.stack);
+        console.error("error connecting: "+ err.stack);
         return;
     };
     console.log("connected as id: " + connection.threadId);
