@@ -1,129 +1,178 @@
- <nav class="navbar navbar-expand-lg navbar-light upper">
-        <a class="navbar-brand" href="./index.handlebars">Finance Tracker</a>
+<nav class="navbar navbar-expand-lg navbar-light upper">
+  <a class="navbar-brand" href="./">Finance Tracker</a>
 
-        <!-- "Hamburger" menu for mobile site-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+  <!-- "Hamburger" menu for mobile site-->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Links to other pages -->
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="./">Weekly Spending</a>
+      <a class="nav-item nav-link" href="./chart">Monthly Summary</a>
+      <a class="nav-item nav-link active" href="./accounts">Account Balances<span class="sr-only">(current)</span></a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <header>
+    <h4>Account Balances</h4>
+  </header>
+
+  <!--Categories & Amounts table-->
+  <div class="row table-row">
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Account</th>
+            <th scope="col">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Checking</th>
+            <td id="checking"></td>
+          </tr>
+          <tr>
+            <th scope="row">Savings</th>
+            <td id="savings"></td>
+          </tr>
+          <tr>
+            <th scope="row">Retirement</th>
+            <td id="retirement"></td>
+          </tr>
+
+          {{!--Handlebars isn't working--}}
+          {{!-- {{#each accounts}}
+              {{> block/account-block }}
+          {{/each}} --}}
+
+          <tr>
+            <th scope="row">NET WORTH</th>
+            <td id="net-worth"></td>
+          </tr>
+    
+        </tbody>
+      </table>
+    </div>
+
+    <!--'Amount' input box with 'Category' dropdown-->
+    <div class="col-md-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input id="amountBox" type="number" class="form-control" placeholder="Enter an amount">
+        <button class=" ml-2 btn btn-outline-secondary" type="button">
+          Select Account
         </button>
-
-        <!-- Links to other pages -->
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link" href="./index.handlebars">Weekly Spending</a>
-            <a class="nav-item nav-link" href="./chart.handlebars">Monthly Summary</a>
-            <a class="nav-item nav-link active" href="./accounts.handlebars">Account Balances<span class="sr-only">(current)</span></a>
+        <select  name="" class="form-control" id="accountSelect">
+          <option value="checking">Checking</option>
+          <option value="savings">Savings</option>
+          <option value="retirement">Retirement</option>
+          <option value="debt">Debt</option>
+        </select> 
+      </div>
+      <div class="col-12 mt-2 d-flex justify-content-center">
+          <div class="col-6">
+            <button id="addBtn" class="btn btn-light btn-lg">Enter</button>
           </div>
-        </div>
-    </nav>
-
-    <main class="container">
-      <header>
-          <h4>Account Balances</h4>
-      </header>
-
-      <!--Categories & Amounts table-->
-      <div class="row table-row">
-          <div class="col-md-6">
-              <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Account</th>
-                      <th scope="col">Balance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Checking</th>
-                      <td id="checking"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Savings</th>
-                      <td id="savings"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Retirement</th>
-                      <td id="retirement"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Debt</th>
-                      <td id="debt"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">NET WORTH</th>
-                      <td id="net-worth"></td>
-                    </tr>
-            
-                  </tbody>
-              </table>
-          </div>
-
-          <!--'Amount' input box with 'Category' dropdown-->
-          <div class="col-md-6">
-              <div class="input-group mb-3">
-                  <span class="input-group-text">$</span>
-                  <input id="amountBox" type="number" class="form-control" placeholder="Enter an amount">
-                  <button class=" ml-2 btn btn-outline-secondary" type="button">
-                      Select Account
-                  </button>
-                  <select  name="" class="form-control" id="accountSelect">
-                     <option value="checking">Checking</option>
-                     <option value="savings">Savings</option>
-                     <option value="retirement">Retirement</option>
-                     <option value="debt">Debt</option>
-                  </select> 
-              </div>
-              <div class="col-12 mt-2 d-flex justify-content-center">
-                  <button id="addBtn" class="btn btn-light btn-lg">Enter</button>
-              </div>
-              <div class="col-6">
-                <button id="clearBtn" class="btn btn-light btn-lg">Clear</button>
-              </div>
+          <div class="col-6">
+              <button id="clearBtn" class="btn btn-light btn-lg">Clear</button>
           </div>
       </div>
-  </main>
+    </div>
+  </div>
+</main>
 
-    <!--JavaScript CDNs for Bootstrap-->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!--JavaScript CDNs for Bootstrap-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script>
-            
-        let account = {}
-        let amountBox = document.getElementById("amountBox")
-        let accountType = "checking"
-        let netWorth = 0
-        let accountsTotal = 0
+<!--Uncompressed jQuery CDN-->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
         
-        function doUpdate(){
-          accountsTotal = 0
+  let account = {}
+  let amountBox = document.getElementById("amountBox")
+  let accountType = "checking"
+  let netWorth = 0
+  let accountsTotal = 0
 
-          document.getElementById("checking").innerHTML = account["checking"] ?? 0
-          accountsTotal +=  parseFloat(account["checking"]?? 0) 
-          
-          document.getElementById("savings").innerHTML = account["savings"] ?? 0
-          accountsTotal +=  parseFloat(account["savings"]?? 0) 
-
-          document.getElementById("retirement").innerHTML = account["retirement"] ?? 0
-          accountsTotal +=  parseFloat(account["retirement"]?? 0) 
-          
-          document.getElementById("debt").innerHTML = account["debt"] ?? 0
-          accountsTotal -=  parseFloat(account["debt"]?? 0) 
-          
-          document.getElementById("net-worth").innerHTML = accountsTotal
-          
-        }
-
-
-        document.getElementById("accountSelect").onclick = (e) =>{
-          accountType = e.target.value
-        }
-
-     
-        document.getElementById("addBtn").onclick = (e) =>{
-          account[accountType] = parseFloat(amountBox.value)
-          doUpdate()
-        }
-        
+  function updateChecking(){
+    document.getElementById("checking").innerHTML = account["checking"] ?? 0
+    accountsTotal +=  parseFloat(account["checking"]?? 0) 
     
-    </script>
+    document.getElementById("net-worth").innerHTML = accountsTotal
+
+    // Checking: id = 1
+    $.ajax("/api/accounts/1", {
+      type: "PUT",
+      data: {amount: amountBox.value}
+    }).then(
+      function() {
+        console.log("posted new amount to Checking account");
+        //location.reload();
+      }
+    );
+  }
+
+  function updateSavings(){
+    document.getElementById("savings").innerHTML = account["savings"] ?? 0
+    accountsTotal +=  parseFloat(account["savings"]?? 0) 
+    
+    document.getElementById("net-worth").innerHTML = accountsTotal
+
+    // Savings: id = 2
+    $.ajax("/api/accounts/2", {
+      type: "PUT",
+      data: {amount: amountBox.value}
+    }).then(
+      function() {
+        console.log("posted new amount to Savings account");
+        //location.reload();
+      }
+    );
+  }
+
+  function updateRetirement(){
+
+    document.getElementById("retirement").innerHTML = account["retirement"] ?? 0
+    accountsTotal +=  parseFloat(account["retirement"]?? 0) 
+    
+    document.getElementById("net-worth").innerHTML = accountsTotal
+
+    // Retirement: id = 3
+    $.ajax("/api/accounts/3", {
+      type: "PUT",
+      data: {amount: amountBox.value}
+    }).then(
+      function() {
+        console.log("posted new amount to Retirement account");
+        //location.reload();
+      }
+    );
+  }
+
+  document.getElementById("accountSelect").onclick = (e) =>{
+    accountType = e.target.value
+  }
+
+  
+  document.getElementById("addBtn").onclick = (e) =>{
+    account[accountType] = parseFloat(amountBox.value)
+
+    if (accountType === "checking") {
+      updateChecking();
+    } else if (accountType === "savings") {
+      updateSavings();
+    } else {
+      updateRetirement();
+    }
+
+  }
+    
+</script>
