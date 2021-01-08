@@ -9,3 +9,48 @@ header, .table-row {
     position: relative !important; 
     width: 1300px !important;
 }
+
+/* NavBar Index*/
+#navbar-brand {
+    color: green;
+}
+#navTab2 {
+    color: lightblue;
+}
+#navTab3 {
+    color: lightblue;
+}
+
+/* NavBar Charts.hb */
+#navTab1Chrt {
+    color: red;
+}
+#navTab3Chrt {
+    color: lightblue;
+}
+
+/* NavBar accounts.hb */
+
+#navTab1Acc {
+    color: red;
+}
+#navTab2Acc {
+    color: lightblue;
+}
+
+
+
+/*Monthly Expenses Table*/ 
+#tableIndex {
+    color: green;
+}
+
+#tableAccounts {
+    color: lightblue;
+}
+
+/*Expenses Input Boxes*/
+
+/*Amount Input Box with catogory dropdown*/
+
+/*Accounts Table*/ 

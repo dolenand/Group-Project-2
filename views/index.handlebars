@@ -9,9 +9,9 @@
         <!-- Links to other pages -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="./">Weekly Spending<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="./chart">Monthly Summary</a>
-            <a class="nav-item nav-link" href="./accounts">Account Balances</a>
+            <a class="nav-item nav-link active" id="navTab1" href="./">Weekly Spending<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" id="navTab2" href="./chart">Monthly Summary</a>
+            <a class="nav-item nav-link" id="navTab3" href="./accounts">Account Balances</a>
           </div>
         </div>
     </nav>
@@ -36,7 +36,7 @@
         <!--Categories & Amounts table-->
         <div class="row table-row">
             <div class="col-md-6">
-                <table class="table">
+                <table class="table" id="tableIndex">
                     <thead>
                       <tr>
                         <th scope="col">Categories</th>
