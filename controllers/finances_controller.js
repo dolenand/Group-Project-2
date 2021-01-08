@@ -50,11 +50,11 @@ router.post("/api/expenses", function(req, res) {
 
 router.get("/api/expenses", function(req, res) {
   finances.allExpenses(function(data) {
+    console.log(data);
     res.json({
       expense_type: req.expense_type,
       ex_amount: req.ex_amount
     })
-
   });
 });
 

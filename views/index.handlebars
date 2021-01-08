@@ -130,7 +130,7 @@
     $(document).ready(function() {
 
       $.get("/api/expenses").then(function(data) {
-        console.log(data);
+        console.log(data[1].ex_amount);
         $("#week-rent").text(ex_amount);
       });
       //$.get("/api/expenses/2").then(function(data) {
