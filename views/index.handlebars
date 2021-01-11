@@ -121,65 +121,80 @@
 
     <!--Weekly Spending JS-->
     <script>
-      //let week = 1
+      
       let weekTotal = 0;
-      //let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
       let expense = {}
       let amountBox = document.getElementById("amountBox")
       let category = "week-rent"
 
-
-      function updateExp(categoryName, id){
-        //let mValues = weeks[week - 1]
-        document.getElementById(categoryName).innerHTML = expense[categoryName] ?? 0
-        weekTotal += parseFloat(expense[categoryName] ?? 0)
-        document.getElementById("week-total").innerHTML = weekTotal
-
-        $.ajax("/api/expenses/" + id, {
-          type: "PUT",
-          data: {ex_amount: amountBox.value}
-        }).then(
-          function() {
-            console.log("posted new expense");
-            //location.reload();
-          }
-        );
-      } 
-
-      document.getElementById("categorySelect").onclick = (e) =>{
-        category = e.target.value
-      }
-
-     // document.getElementById("weekSelect").onclick = (e) =>{
-       // week = parseInt(e.target.value)
-        //doUpdateMonth()
-     // }
       
-      document.getElementById("addBtn").onclick = (e) =>{
-        expense[category] = parseFloat(expense[category] ?? 0 ) + parseFloat(amountBox.value)
-        //localStorage.setItem("weeks",JSON.stringify(weeks))
 
-        if (category === "week-rent"){
-          updateExp(category, 1);
-        } else if (category ==="week-utilities"){
-          updateExp("week-utilities", 2);
-        } else if (category ==="week-food"){
-          updateExp("week-food", 3);
-        } else if (category ==="week-transportation"){
-          updateExp("week-transportation", 4);
-        } else if (category ==="week-entertainment"){
-          updateExp("week-entertainment", 5);
-        } else if (category ==="week-savings"){
-          updateExp("week-savings", 6);
-        } else {
-          updateExp("week-misc", 7);
+      $(document).ready(function(event) {
+        //event.preventDefault();
+
+        // Populate expenses table on page load
+        $.get("/api/expenses", function(data) {
+          //console.log("index get, data = " + data);
+          //console.log(data[1]);
+          console.log(data[0].ex_amount);
+
+          $("#week-rent").html(data[0].ex_amount);
+          $("#week-utilities").html(data[1].ex_amount);
+          $("#week-food").html(data[2].ex_amount);
+          $("#week-transportation").html(data[3].ex_amount);
+          $("#week-entertainment").html(data[4].ex_amount);
+          $("#week-savings").html(data[5].ex_amount);
+          $("#week-misc").html(data[6].ex_amount);
+          //$("#week-total").html(data[0].ex_amount + data[1].ex_amount + data[2].ex_amount + data[3].ex_amount + data[4].ex_amount + data[5].ex_amount + data[6].ex_amount) + data[7].ex_amount );
+        });
+
+        function updateExp(categoryName, id) {
+          //let mValues = weeks[week - 1]
+          document.getElementById(categoryName).innerHTML = expense[categoryName] ?? 0
+          weekTotal += parseFloat(expense[categoryName] ?? 0)
+          document.getElementById("week-total").innerHTML = weekTotal
+
+          $.ajax("/api/expenses/" + id, {
+            type: "PUT",
+            data: {ex_amount: amountBox.value}
+          }).then(
+            function() {
+              console.log("posted new expense");
+              //location.reload();
+            }
+          );
+        } 
+
+        document.getElementById("categorySelect").onclick = (e) =>{
+          category = e.target.value
         }
-      }
-      
-      //document.getElementById("clearBtn").onclick = (e) =>{
-        //weeks[week - 1][category] = 0
-        //localStorage.setItem("weeks",JSON.stringify(weeks))
-        //doUpdateMonth()
-      //}
-      //doUpdateMonth()
+        
+        document.getElementById("addBtn").onclick = (e) =>{
+          expense[category] = parseFloat(expense[category] ?? 0 ) + parseFloat(amountBox.value)
+
+          if (category === "week-rent"){
+            updateExp(category, 1);
+          } else if (category ==="week-utilities"){
+            updateExp("week-utilities", 2);
+          } else if (category ==="week-food"){
+            updateExp("week-food", 3);
+          } else if (category ==="week-transportation"){
+            updateExp("week-transportation", 4);
+          } else if (category ==="week-entertainment"){
+            updateExp("week-entertainment", 5);
+          } else if (category ==="week-savings"){
+            updateExp("week-savings", 6);
+          } else {
+            updateExp("week-misc", 7);
+          }
+        }
+        
+        //document.getElementById("clearBtn").onclick = (e) =>{
+          //weeks[week - 1][category] = 0
+          //localStorage.setItem("weeks",JSON.stringify(weeks))
+          //doUpdateMonth()
+        //}
+
+      });
+
   </script>

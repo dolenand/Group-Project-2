@@ -31,72 +31,91 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     
+    <!--Uncompressed jQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
     <!--Chart.js-->
     <script>
-      var ctx = document.getElementById('myChart').getContext('2d');
-      let weeks = localStorage.getItem("weeks") != null ? (localStorage.getItem("weeks") != undefined ? JSON.parse(localStorage.getItem("weeks")) : [  {} ,  {} , {} , {} ]) : [  {} ,  {} , {} , {} ]
-     
-      let rent = 0 //week-rent
-      let utilities = 0 //week-utilities
-      let food = 0//week-food
-      let transportation = 0 //week-transportation
-      let entertainment = 0 //week-entertainment
-      let savings = 0//week-savings
-      let misc = 0//week-misc
-      let total = 0 //week-total
-      
-      for(var i = 0;i < 4;i++){
-        week = weeks[i];
-        rent += parseFloat(week['week-rent'] ?? 0)
-        utilities += parseFloat(week['week-utilities'] ?? 0)
-        food += parseFloat(week['week-food'] ?? 0)
-        transportation += parseFloat(week['week-transportation'] ?? 0)
-        entertainment += parseFloat(week['entertainment'] ?? 0)
-        savings += parseFloat(week['week-savings'] ?? 0)
-        misc += parseFloat(week['week-misc'] ?? 0)
+        var ctx = document.getElementById('myChart').getContext('2d');
+        
+        var rent; // week-rent
+        var utilities; // week-utilities
+        var food; // week-food
+        var transportation; // week-transportation
+        var entertainment; // week-entertainment
+        var savings; // week-savings
+        var misc; // week-misc
+        var total; // week-total
 
-        total += (rent + utilities + food + transportation + entertainment + savings + misc)
-      }
 
-       var myChart = new Chart(ctx, {
-           type: 'bar',
-           data: {
-               labels: ['Rent', 'Utilities', 'Food', 'Transportation', 'Entertainment', 'Savings','Misc','Total'],
-               datasets: [{
-                   label: 'Monthly Expenses',
-                   data: [rent,utilities,food,transportation,entertainment,savings,misc,total],
-                   backgroundColor: [
-                       'rgba(255, 99, 132, 0.2)',
-                       'rgba(54, 162, 235, 0.2)',
-                       'rgba(255, 206, 86, 0.2)',
-                       'rgba(75, 192, 192, 0.2)',
-                       'rgba(153, 102, 255, 0.2)',
-                       'rgba(255, 159, 64, 0.2)',
-                       'rgba(255, 99, 132, 0.2)',
-                       'rgba(54, 162, 235, 0.2)',
-                   ],
-                   borderColor: [
-                       'rgba(255, 99, 132, 1)',
-                       'rgba(54, 162, 235, 1)',
-                       'rgba(255, 206, 86, 1)',
-                       'rgba(75, 192, 192, 1)',
-                       'rgba(153, 102, 255, 1)',
-                       'rgba(255, 159, 64, 1)',
-                       'rgba(255, 99, 132, 1)',
-                       'rgba(54, 162, 235, 1)',
-                   ],
-                   borderWidth: 1
-               }]
-           },
-           options: {
-               scales: {
-                   yAxes: [{
-                       ticks: {
-                           beginAtZero: true
-                       }
-                   }]
-               },
-               maintainAspectRatio: true
-           }
-       });
+        async function getData() {
+            try {
+                await $.get("/api/expenses", function(data) {
+
+                    console.log(data[0].ex_amount);
+
+                    rent = data[0].ex_amount;
+                    utilities = data[1].ex_amount;
+                    food = data[2].ex_amount;
+                    transportation = data[3].ex_amount;
+                    entertainment = data[4].ex_amount;
+                    savings = data[5].ex_amount;
+                    misc = data[6].ex_amount;
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        async function createChart() {
+
+            await getData();
+
+            total = rent + utilities + food + transportation + entertainment + savings + misc;
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Rent', 'Utilities', 'Food', 'Transportation', 'Entertainment', 'Savings','Misc','Total'],
+                    datasets: [{
+                        label: 'Monthly Expenses',
+                        data: [rent,utilities,food,transportation,entertainment,savings,misc,total],
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    maintainAspectRatio: true
+                }
+            });
+        }
+
+        createChart();
+       
     </script>
