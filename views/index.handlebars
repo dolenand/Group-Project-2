@@ -9,7 +9,7 @@
         <!-- Links to other pages -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" id="navTab1" href="./">Weekly Spending<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" id="navTab1" href="./">Monthly Spending<span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" id="navTab2" href="./chart">Monthly Summary</a>
             <a class="nav-item nav-link" id="navTab3" href="./accounts">Account Balances</a>
           </div>
@@ -20,15 +20,7 @@
       <header>
           <div class="col-12 mb-4">
              <div class="row justify-content-start">
-                <h4 style="display: inline;">Spending: Week</h4>
-                <div class="ml-2" style="display: inline;">
-                  <select  id="weekSelect" class="form-control" title="Category">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-                </div>
+                <h4 style="display: inline;">Monthly Spending</h4>
              </div>
           </div>
       </header>
@@ -126,17 +118,13 @@
       let expense = {}
       let amountBox = document.getElementById("amountBox")
       let category = "week-rent"
-
-      
+      var valuesArray = [];
 
       $(document).ready(function(event) {
         //event.preventDefault();
 
         // Populate expenses table on page load
         $.get("/api/expenses", function(data) {
-          //console.log("index get, data = " + data);
-          //console.log(data[1]);
-          console.log(data[0].ex_amount);
 
           $("#week-rent").html(data[0].ex_amount);
           $("#week-utilities").html(data[1].ex_amount);
@@ -145,14 +133,17 @@
           $("#week-entertainment").html(data[4].ex_amount);
           $("#week-savings").html(data[5].ex_amount);
           $("#week-misc").html(data[6].ex_amount);
-          //$("#week-total").html(data[0].ex_amount + data[1].ex_amount + data[2].ex_amount + data[3].ex_amount + data[4].ex_amount + data[5].ex_amount + data[6].ex_amount) + data[7].ex_amount );
+
+          for (let i = 0; i < data.length; i++) {
+            weekTotal += data[i].ex_amount;
+          }
+          $("#week-total").html(weekTotal);
         });
 
         function updateExp(categoryName, id) {
-          //let mValues = weeks[week - 1]
           document.getElementById(categoryName).innerHTML = expense[categoryName] ?? 0
-          weekTotal += parseFloat(expense[categoryName] ?? 0)
-          document.getElementById("week-total").innerHTML = weekTotal
+          //weekTotal += parseFloat(expense[categoryName] ?? 0)
+          //document.getElementById("week-total").innerHTML = weekTotal
 
           $.ajax("/api/expenses/" + id, {
             type: "PUT",
@@ -160,7 +151,7 @@
           }).then(
             function() {
               console.log("posted new expense");
-              //location.reload();
+              location.reload();
             }
           );
         } 
