@@ -43,6 +43,13 @@ router.get("/api/expenses", function(req, res) {
   });
 });
 
+// Use to populate account data on page load
+router.get("/api/accounts", function(req, res) {
+  finances.allAccounts(function(data) {
+    res.json(data);
+  });
+});
+
 router.post("/api/expenses", function(req, res) {
   finances.createExpenses([
     "expense_type", "ex_amount"

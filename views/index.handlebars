@@ -118,10 +118,8 @@
       let expense = {}
       let amountBox = document.getElementById("amountBox")
       let category = "week-rent"
-      var valuesArray = [];
 
       $(document).ready(function(event) {
-        //event.preventDefault();
 
         // Populate expenses table on page load
         $.get("/api/expenses", function(data) {
@@ -142,8 +140,6 @@
 
         function updateExp(categoryName, id) {
           document.getElementById(categoryName).innerHTML = expense[categoryName] ?? 0
-          //weekTotal += parseFloat(expense[categoryName] ?? 0)
-          //document.getElementById("week-total").innerHTML = weekTotal
 
           $.ajax("/api/expenses/" + id, {
             type: "PUT",
@@ -180,11 +176,18 @@
           }
         }
         
-        //document.getElementById("clearBtn").onclick = (e) =>{
-          //weeks[week - 1][category] = 0
-          //localStorage.setItem("weeks",JSON.stringify(weeks))
-          //doUpdateMonth()
-        //}
+        document.getElementById("clearBtn").onclick = (e) =>{
+          for (let i = 1; i < 8; i++) {
+            $.ajax("/api/expenses/" + i, {
+              type: "PUT",
+              data: {ex_amount: 0}
+            }).then(
+              function() {
+                location.reload();
+              }
+            );
+          }
+        }
 
       });
 
