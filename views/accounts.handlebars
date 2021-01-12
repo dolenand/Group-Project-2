@@ -9,7 +9,7 @@
   <!-- Links to other pages -->
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" id="navTab1Acc" href="./">Weekly Spending</a>
+      <a class="nav-item nav-link" id="navTab1Acc" href="./">Monthly Spending</a>
       <a class="nav-item nav-link" id="navTab2Acc" href="./chart">Monthly Summary</a>
       <a class="nav-item nav-link active" id="navTab3Acc" href="./accounts">Account Balances<span class="sr-only">(current)</span></a>
     </div>
@@ -44,12 +44,6 @@
             <th scope="row">Retirement</th>
             <td id="retirement"></td>
           </tr>
-
-          {{!--Handlebars isn't working--}}
-          {{!-- {{#each accounts}}
-              {{> block/account-block }}
-          {{/each}} --}}
-
           <tr>
             <th scope="row">NET WORTH</th>
             <td id="net-worth"></td>
@@ -71,7 +65,6 @@
           <option value="checking">Checking</option>
           <option value="savings">Savings</option>
           <option value="retirement">Retirement</option>
-          <option value="debt">Debt</option>
         </select> 
       </div>
       <div class="col-12 mt-2 d-flex justify-content-center">
@@ -94,85 +87,70 @@
 <!--Uncompressed jQuery CDN-->
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
+<!--Accounts JS-->
+    <script type="text/javascript">
+      
+      let account = {}
+      let amountBox = document.getElementById("amountBox")
+      let accountType = "checking"
+      let accountsTotal = 0
+
+      $(document).ready(function(event) {
+
+        // Populate accounts table on page load
+        $.get("/api/accounts", function(data) {
+
+          $("#checking").html(data[0].amount);
+          $("#savings").html(data[1].amount);
+          $("#retirement").html(data[2].amount);
+
+          for (let i = 0; i < data.length; i++) {
+            accountsTotal += data[i].amount;
+          }
+          $("#net-worth").html(accountsTotal);
+        });
+
+        function updateAcct(accountName, id) {
+          document.getElementById(accountName).innerHTML = account[accountName] ?? 0
+
+          $.ajax("/api/accounts/" + id, {
+            type: "PUT",
+            data: {amount: amountBox.value}
+          }).then(
+            function() {
+              location.reload();
+            }
+          );
+        } 
+
+        document.getElementById("accountSelect").onclick = (e) =>{
+          accountType = e.target.value
+        }
         
-  let account = {}
-  let amountBox = document.getElementById("amountBox")
-  let accountType = "checking"
-  let netWorth = 0
-  let accountsTotal = 0
+        document.getElementById("addBtn").onclick = (e) =>{
+        account[accountType] = parseFloat(amountBox.value)
+          if (accountType === "checking") {
+            updateAcct(accountType, 1);
+          } else if (accountType === "savings") {
+            updateAcct(accountType, 2);
+          } else {
+            updateAcct(accountType, 3);
+          }
+       }
+        
+        document.getElementById("clearBtn").onclick = (e) =>{
+          for (let i = 1; i < 4; i++) {
+            $.ajax("/api/accounts/" + i, {
+              type: "PUT",
+              data: {amount: 0}
+            }).then(
+              function() {
+                location.reload();
+              }
+            );
+          }
+        }
 
-  function updateChecking(){
-    document.getElementById("checking").innerHTML = account["checking"] ?? 0
-    accountsTotal +=  parseFloat(account["checking"]?? 0) 
-    
-    document.getElementById("net-worth").innerHTML = accountsTotal
+      });
 
-    // Checking: id = 1
-    $.ajax("/api/accounts/1", {
-      type: "PUT",
-      data: {amount: amountBox.value}
-    }).then(
-      function() {
-        console.log("posted new amount to Checking account");
-        //location.reload();
-      }
-    );
-  }
-
-  function updateSavings(){
-    document.getElementById("savings").innerHTML = account["savings"] ?? 0
-    accountsTotal +=  parseFloat(account["savings"]?? 0) 
-    
-    document.getElementById("net-worth").innerHTML = accountsTotal
-
-    // Savings: id = 2
-    $.ajax("/api/accounts/2", {
-      type: "PUT",
-      data: {amount: amountBox.value}
-    }).then(
-      function() {
-        console.log("posted new amount to Savings account");
-        //location.reload();
-      }
-    );
-  }
-
-  function updateRetirement(){
-
-    document.getElementById("retirement").innerHTML = account["retirement"] ?? 0
-    accountsTotal +=  parseFloat(account["retirement"]?? 0) 
-    
-    document.getElementById("net-worth").innerHTML = accountsTotal
-
-    // Retirement: id = 3
-    $.ajax("/api/accounts/3", {
-      type: "PUT",
-      data: {amount: amountBox.value}
-    }).then(
-      function() {
-        console.log("posted new amount to Retirement account");
-        //location.reload();
-      }
-    );
-  }
-
-  document.getElementById("accountSelect").onclick = (e) =>{
-    accountType = e.target.value
-  }
-
-  
-  document.getElementById("addBtn").onclick = (e) =>{
-    account[accountType] = parseFloat(amountBox.value)
-
-    if (accountType === "checking") {
-      updateChecking();
-    } else if (accountType === "savings") {
-      updateSavings();
-    } else {
-      updateRetirement();
-    }
-
-  }
-    
-</script>
+  </script>

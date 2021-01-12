@@ -6,8 +6,8 @@ header, .table-row {
     margin-right: auto;
     margin-left: auto;
     padding: 30px !important;
-    position: relative !important; 
-    width: 1300px !important;
+    width: 80% !important;
+    height: 95% !important;
 }
 
 /* NavBar Index*/
@@ -46,7 +46,7 @@ header, .table-row {
 }
 
 #tableAccounts {
-    color: lightblue;
+    color: rgb(19, 137, 177);
 }
 
 /*Expenses Input Boxes*/

@@ -36,6 +36,20 @@ router.get("/accounts", function(req, res) {
   });
 });
 
+// Use to populate expense data on page load
+router.get("/api/expenses", function(req, res) {
+  finances.allExpenses(function(data) {
+    res.json(data);
+  });
+});
+
+// Use to populate account data on page load
+router.get("/api/accounts", function(req, res) {
+  finances.allAccounts(function(data) {
+    res.json(data);
+  });
+});
+
 router.post("/api/expenses", function(req, res) {
   finances.createExpenses([
     "expense_type", "ex_amount"
